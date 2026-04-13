@@ -1,0 +1,12 @@
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+.env
+*.Zone.Identifier
+.DS_Store
+Thumbs.db
+.cache/
+dist/
+*.log
+internal-docs/
