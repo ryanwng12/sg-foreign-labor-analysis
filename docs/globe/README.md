@@ -1,12 +1,14 @@
 # Migration Globe — Visualization
 
-A scrollytelling 3D globe showing where Singapore's migrants come from, animated across 7 UN DESA snapshots (1990–2020).
+**"Where Do They Come From?"** — A scrollytelling 3D globe showing where Singapore's migrants come from, animated across 7 UN DESA snapshots (1990–2020). In the narrative arc, this is Viz 3: it connects the nationalities debated in online discourse (Viz 1 & 2) to actual migration patterns and volumes.
 
 ---
 
 ## What It Shows
 
 As the user scrolls, the year advances from 1990 to 2020. Animated plane icons fly along great-circle arcs from 15 origin countries to Singapore, with plane count proportional to the rate of migration change. Origin countries are tinted by migrant stock on a sqrt colour scale.
+
+The visualization bridges public perception and hard data — where online posts debate "too many workers from X country," the globe shows the actual scale and trajectory of migration from each origin, revealing patterns like the 930% growth from India/Pakistan that feeds into the conclusion section.
 
 ## Interaction
 

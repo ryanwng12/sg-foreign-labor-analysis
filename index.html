@@ -110,6 +110,12 @@
     margin: 0 auto;
     padding: 60px 32px 24px;
   }
+  .viz-section + .viz-section .section-header,
+  .viz-section + .section-header {
+    padding-top: 80px;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 24px;
+  }
   .section-num {
     font-size: 0.7rem;
     letter-spacing: 2px;
@@ -254,6 +260,52 @@
     letter-spacing: 0.5px;
   }
 
+  /* ── CONCLUSION ── */
+  .conclusion {
+    background: #0d1117;
+    color: #e6edf3;
+    padding: 80px 24px 60px;
+  }
+  .conclusion-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .conclusion h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+  .conclusion .answer {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #58a6ff;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  .conclusion p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #b1bac4;
+    margin-bottom: 18px;
+  }
+  .conclusion .evidence-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #58a6ff;
+    margin-bottom: 6px;
+    margin-top: 28px;
+  }
+  .conclusion strong { color: #e6edf3; }
+  .conclusion .closing {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid #21262d;
+    font-style: italic;
+    color: #8b949e;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 640px) {
     .hero h1 { font-size: 1.6rem; }
@@ -268,10 +320,11 @@
 <!-- ═══════ NAV DOTS ═══════ -->
 <nav class="nav-dots">
   <div class="nav-dot active" data-label="Top" onclick="document.getElementById('hero-section').scrollIntoView({behavior:'smooth'})"></div>
-  <div class="nav-dot" data-label="Sentiment" onclick="document.getElementById('sec-stance').scrollIntoView({behavior:'smooth'})"></div>
-  <div class="nav-dot" data-label="Worldviews" onclick="document.getElementById('sec-clouds').scrollIntoView({behavior:'smooth'})"></div>
-  <div class="nav-dot" data-label="Migration Globe" onclick="document.getElementById('hdr-globe').scrollIntoView({behavior:'smooth'})"></div>
-  <div class="nav-dot" data-label="Labor Share" onclick="document.getElementById('hdr-labor').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="nav-dot" data-label="Perception" onclick="document.getElementById('sec-stance').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="nav-dot" data-label="Divide" onclick="document.getElementById('sec-clouds').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="nav-dot" data-label="Origins" onclick="document.getElementById('hdr-globe').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="nav-dot" data-label="Evidence" onclick="document.getElementById('hdr-labor').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="nav-dot" data-label="Conclusion" onclick="document.getElementById('sec-conclusion').scrollIntoView({behavior:'smooth'})"></div>
 </nav>
 
 <!-- ═══════ HERO ═══════ -->
@@ -320,6 +373,7 @@
         <svg id="cloud-pro"></svg>
       </div>
     </div>
+    <p class="chart-insight">Two camps, same country — the words reveal how differently people experience the same reality.</p>
   </div>
 </section>
 
@@ -344,6 +398,28 @@
 <section class="scroll-section" id="sec-labor" style="height: 550vh;">
   <div class="iframe-sticky">
     <iframe id="iframe-labor" src="src/labor-share.html" loading="lazy"></iframe>
+  </div>
+</section>
+
+<!-- ═══════ CONCLUSION ═══════ -->
+<section class="conclusion" id="sec-conclusion">
+  <div class="conclusion-inner">
+    <h2 id="txt-conclusion-title"></h2>
+    <div class="answer" id="txt-conclusion-answer"></div>
+
+    <div class="evidence-label" id="txt-conclusion-ev1-label"></div>
+    <p id="txt-conclusion-ev1"></p>
+
+    <div class="evidence-label" id="txt-conclusion-ev2-label"></div>
+    <p id="txt-conclusion-ev2"></p>
+
+    <div class="evidence-label" id="txt-conclusion-ev3-label"></div>
+    <p id="txt-conclusion-ev3"></p>
+
+    <div class="evidence-label" id="txt-conclusion-ev4-label"></div>
+    <p id="txt-conclusion-ev4"></p>
+
+    <p class="closing" id="txt-conclusion-closing"></p>
   </div>
 </section>
 
@@ -389,6 +465,18 @@
   set("txt-clouds-desc",  C.clouds.desc);
   set("txt-clouds-anti",  C.clouds.labelAnti);
   set("txt-clouds-pro",   C.clouds.labelPro);
+
+  set("txt-conclusion-title",    C.conclusion.title);
+  set("txt-conclusion-answer",   C.conclusion.answer);
+  set("txt-conclusion-ev1-label", C.conclusion.ev1Label);
+  set("txt-conclusion-ev1",      C.conclusion.ev1);
+  set("txt-conclusion-ev2-label", C.conclusion.ev2Label);
+  set("txt-conclusion-ev2",      C.conclusion.ev2);
+  set("txt-conclusion-ev3-label", C.conclusion.ev3Label);
+  set("txt-conclusion-ev3",      C.conclusion.ev3);
+  set("txt-conclusion-ev4-label", C.conclusion.ev4Label);
+  set("txt-conclusion-ev4",      C.conclusion.ev4);
+  set("txt-conclusion-closing",  C.conclusion.closing);
 
   set("txt-footer", C.footer);
 
@@ -653,7 +741,7 @@ const ThemeClouds = (() => {
 // ── Nav dot tracking ──
 (function() {
     const dots = document.querySelectorAll(".nav-dot");
-    const sections = ["hero-section", "sec-stance", "sec-clouds", "hdr-globe", "hdr-labor"];
+    const sections = ["hero-section", "sec-stance", "sec-clouds", "hdr-globe", "hdr-labor", "sec-conclusion"];
     const observer = new IntersectionObserver(entries => {
         entries.forEach(e => {
             if (e.isIntersecting) {
