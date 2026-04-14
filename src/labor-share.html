@@ -236,6 +236,17 @@
     font-variant-numeric: tabular-nums;
     pointer-events: none;
   }
+  .timeline-tip {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 6px;
+    padding: 4px 12px;
+    background: #f0eeeb;
+    border-radius: 4px;
+    transition: opacity 0.4s;
+  }
+  .timeline-tip.hidden { opacity: 0; pointer-events: none; }
 
   /* ─── Comparison banner ─── */
   .compare-banner {
@@ -447,6 +458,7 @@
         <div class="timeline-handle timeline-handle-start" id="handleStart"></div>
       </div>
       <div class="timeline-ticks" id="timelineTicks"></div>
+      <div class="timeline-tip" id="timelineTip">💡 Click a year, then another to compare side-by-side</div>
     </div>
   </div>
 
@@ -654,6 +666,8 @@ Promise.all([
     document.getElementById('compareBanner').classList.add('active');
     document.getElementById('barChart').style.display = 'none';
     document.getElementById('barCompareWrapper').classList.add('active');
+    const tip = document.getElementById('timelineTip');
+    if (tip) tip.classList.add('hidden');
 
     updateComparisonDisplay();
     updateTimeline();
@@ -669,6 +683,8 @@ Promise.all([
     document.getElementById('compareBanner').classList.remove('active');
     document.getElementById('barCompareWrapper').classList.remove('active');
     document.getElementById('barChart').style.display = '';
+    const tip = document.getElementById('timelineTip');
+    if (tip) tip.classList.remove('hidden');
 
     areaCtrl.exitComparison();
 
