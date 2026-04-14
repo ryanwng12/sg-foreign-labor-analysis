@@ -31,12 +31,14 @@ All four visualizations are presented on a single scrollable page (`index.html`)
 
 | # | Name | Type | Data Source |
 |---|------|------|-------------|
-| 1 | **The Overall Picture of Public Sentiment** | Diverging bar chart | Reddit + The Independent SG |
-| 2 | **Two Different Worldviews** | Word cloud pair | Same dataset, split by stance |
+| 1 | **What Are People Actually Saying?** | Diverging bar chart | Reddit + The Independent SG |
+| 2 | **The Language of Division** | Word cloud pair | Same dataset, split by stance |
 | 3 | **Where Do They Come From?** | 3D scrollytelling globe | UN DESA Migrant Stock 2020 |
 | 4 | **The Changing Face of Singapore's Workforce** | Scroll-animated dashboard | MOM + SingStat (1990–2025) |
 
 Visualizations 3 and 4 are embedded via iframes from `src/` (complex standalone apps with their own scroll/interaction logic). Visualizations 1 and 2 are rendered inline with D3.
+
+A **Conclusion section** ("So, Are Singaporeans Being Replaced?") follows the four visualizations, synthesizing findings with 4 evidence blocks — one per viz — and concrete data points (23% anti-foreign sentiment, 46% anti on Identity & Culture, 930% growth from India/Pakistan, 82% construction foreign share, 173K lost in COVID, resident employment grew +111%).
 
 ---
 
@@ -44,7 +46,7 @@ Visualizations 3 and 4 are embedded via iframes from `src/` (complex standalone 
 
 ```
 sg-foreign-labor-analysis/            # Repository root
-├── index.html                       # Combined single-page view (all 4 vizzes)
+├── index.html                       # Combined single-page view (all 4 vizzes + conclusion)
 ├── content.js                       # Editable narrative text for the combined page
 │
 ├── src/                             # Visualization source files

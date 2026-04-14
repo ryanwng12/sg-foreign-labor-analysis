@@ -1,20 +1,20 @@
 # Sentiment Analysis — Visualization
 
-Two complementary D3.js charts that reveal Singaporean online sentiment toward foreign workers, built from ~4,000 classified posts (2015–2025).
+Two complementary D3.js charts that reveal Singaporean online sentiment toward foreign workers, built from ~4,000 classified posts (2015–2025). These are the opening evidence in the narrative arc, establishing public perception before the data-driven visualizations.
 
 ---
 
 ## Charts
 
-### Diverging Bar Chart
+### Viz 1: "What Are People Actually Saying?" — Diverging Bar Chart
 
-Exposes the overall sentiment landscape by topic. Each bar extends left (concerned) or right (supportive) from a shared zero baseline, with bar length encoding post count.
+Exposes the overall sentiment landscape by topic. Each bar extends left (concerned) or right (supportive) from a shared zero baseline, with bar length encoding post count. This establishes the baseline: what does the public actually think, beyond headlines?
 
 Six topic categories: Policy & Government, Worker Welfare & Rights, Jobs & Employment, Identity & Culture, Economy & Wages, General.
 
-### Word / Theme Clouds
+### Viz 2: "The Language of Division" — Word / Theme Clouds
 
-Contrasts the specific language of each sentiment camp. Word size encodes theme frequency; colour matches the bar chart palette. Two clouds are rendered side by side — concerned themes on the left, supportive on the right.
+Contrasts the specific language of each sentiment camp. Word size encodes theme frequency; colour matches the bar chart palette. Two clouds are rendered side by side — concerned themes on the left, supportive on the right. This drills into the rhetorical patterns: what words and frames does each side reach for?
 
 ## Visual Encoding
 
