@@ -56,7 +56,7 @@ const CONTENT = {
     title: "The Changing Face of Singapore's Workforce",
     desc: `Scroll through 36 years of employment data (1990 – 2025). The area chart shows
       aggregate resident vs. non-resident employment; the bar chart breaks it down across
-      11 sectors. Scroll inside the panel to advance through time.`,
+      11 sectors.`,
   },
 
   // ── FOOTER ──

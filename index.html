@@ -150,14 +150,6 @@
     border: none;
     display: block;
   }
-  /* Transparent overlay captures wheel/touch so parent page owns the scroll */
-  .iframe-scroll-capture {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 10;
-    cursor: default;
-  }
-
   /* ── INLINE D3 CHART SECTIONS ── */
   .viz-section {
     position: relative;
@@ -339,7 +331,6 @@
 </div>
 <section class="scroll-section" id="sec-globe" style="height: 800vh;">
   <div class="iframe-sticky">
-    <div class="iframe-scroll-capture" data-section="sec-globe"></div>
     <iframe id="iframe-globe" src="src/globe/index.html" loading="lazy"></iframe>
   </div>
 </section>
@@ -352,7 +343,6 @@
 </div>
 <section class="scroll-section" id="sec-labor" style="height: 550vh;">
   <div class="iframe-sticky">
-    <div class="iframe-scroll-capture" data-section="sec-labor"></div>
     <iframe id="iframe-labor" src="src/labor-share.html" loading="lazy"></iframe>
   </div>
 </section>
@@ -405,27 +395,58 @@
   document.title = C.hero.title;
 })();
 
-// ── Overlay: forward wheel & touch to parent scroll ──
-document.querySelectorAll('.iframe-scroll-capture').forEach(overlay => {
-  overlay.addEventListener('wheel', e => {
-    e.preventDefault();
-    e.stopPropagation();
-    window.scrollBy(0, e.deltaY);
-  }, { passive: false });
+// ── Wheel/touch interception for iframe scroll-sections ──
+// Attach wheel listener INSIDE same-origin iframes to forward scroll to parent.
+// This avoids overlay divs that would block clicks/hover/drag on the viz.
+(function() {
+  const iframes = document.querySelectorAll('.scroll-section iframe');
 
-  let touchY = null;
-  overlay.addEventListener('touchstart', e => {
-    touchY = e.touches[0].clientY;
-  }, { passive: true });
-  overlay.addEventListener('touchmove', e => {
-    if (touchY === null) return;
-    const dy = touchY - e.touches[0].clientY;
-    touchY = e.touches[0].clientY;
-    e.preventDefault();
-    window.scrollBy(0, dy);
-  }, { passive: false });
-  overlay.addEventListener('touchend', () => { touchY = null; }, { passive: true });
-});
+  iframes.forEach(iframe => {
+    iframe.addEventListener('load', () => {
+      try {
+        const iframeWin = iframe.contentWindow;
+        const iframeDoc = iframe.contentDocument || iframeWin.document;
+
+        // Capture wheel inside iframe → forward to parent scroll
+        iframeDoc.addEventListener('wheel', e => {
+          e.preventDefault();
+          window.scrollBy(0, e.deltaY);
+        }, { passive: false });
+
+        // Capture touch inside iframe → forward to parent scroll
+        let touchY = null;
+        iframeDoc.addEventListener('touchstart', e => {
+          touchY = e.touches[0].clientY;
+        }, { passive: true });
+        iframeDoc.addEventListener('touchmove', e => {
+          if (touchY === null) return;
+          const dy = touchY - e.touches[0].clientY;
+          touchY = e.touches[0].clientY;
+          e.preventDefault();
+          window.scrollBy(0, dy);
+        }, { passive: false });
+        iframeDoc.addEventListener('touchend', () => { touchY = null; }, { passive: true });
+      } catch(e) {
+        // Cross-origin fallback: won't happen for local files
+        console.warn('Cannot attach scroll listeners to iframe:', e);
+      }
+    });
+  });
+
+  // Also handle wheel on the parent document when over scroll-sections
+  // (covers the sticky container area outside the iframe bounds, if any)
+  const sections = document.querySelectorAll('.scroll-section');
+  document.addEventListener('wheel', e => {
+    for (const sec of sections) {
+      const r = sec.getBoundingClientRect();
+      if (r.top <= 0 && r.bottom > 0) {
+        e.preventDefault();
+        window.scrollBy(0, e.deltaY);
+        return;
+      }
+    }
+  }, { passive: false, capture: true });
+})();
 
 // ── Scroll-sync: parent scroll drives iframe scroll ──
 function setupScrollSync(sectionId, iframeId) {
