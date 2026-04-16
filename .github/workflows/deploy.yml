@@ -7,16 +7,16 @@ on:
      branches: ["main"]
    workflow_dispatch:
 
- permissions:
+permissions:
    contents: read
    pages: write
    id-token: write
 
- concurrency:
+concurrency:
    group: "pages"
    cancel-in-progress: false
 
- jobs:
+jobs:
    build:
      runs-on: ubuntu-latest
      steps:
@@ -30,7 +30,7 @@ on:
          uses: actions/upload-pages-artifact@v3
          with:
            path: '.'
-
+   
    deploy:
      needs: build
      if: github.ref == 'refs/heads/main'
